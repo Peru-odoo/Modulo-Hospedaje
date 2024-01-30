@@ -41,12 +41,7 @@
                     <notebook>
                         <page name="pagina_precio" string="Precios">
                             <group>
-                                <group>
-                                    <field name="precio_por_noche" />
-                                </group>
-                                <group>
-                                <field name="precio_por_persona" />
-                                </group>
+                                <field name="precio_por_noche" />
                             </group>
                         </page>
                     </notebook>

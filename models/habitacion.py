@@ -28,7 +28,6 @@ class Habitacion(models.Model):
     capacidad = fields.Integer(string=_('Capacidad'), compute='_compute_capacidad', default="0")
     currency_id = fields.Many2one('res.currency', 'Moneda', required=True, default=lambda self: self.env['res.currency'].search([('name', '=', 'CUP')]).id)
     precio_por_noche = fields.Monetary(string=_('Precio por noche'), required=True)
-    precio_por_persona = fields.Monetary(string=_('Precio por persona'), required=True)
 
     
     @api.depends('numero')
@@ -50,4 +49,10 @@ class Habitacion(models.Model):
             else:
                 rec.capacidad = 0
     
+    @api.constrains('precio_por_noche')
+    def _check_precios(self):
+        for rec in self:
+            if rec.precio_por_noche <= 0:
+                raise ValidationError('El precio por noche debe ser mayor que 0')
+        
     
