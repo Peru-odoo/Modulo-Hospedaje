@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View habitacion View Tree -->
+    <record id="view_hotel_habitacion_tree" model="ir.ui.view">
+        <field name="name">hotel.habitacion.tree</field>
+        <field name="model">hotel.habitacion</field>
+        <field name="arch" type="xml">
+            <tree string="Habitación">
+                <field name="name" />
+                <field name="tipo" />
+                <field name="capacidad" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View habitacion form -->
+    <record id="view_hotel_habitacion_form" model="ir.ui.view">
+        <field name="name">hotel.habitacion.form</field>
+        <field name="model">hotel.habitacion</field>
+        <field name="arch" type="xml">
+            <form string="Habitación">
+                <header></header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="Name..." readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="numero" />
+                            <field name="tipo" />
+                        </group>
+                        <group>
+                            <field name="currency_id" />
+                            <field name="capacidad" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="pagina_precio" string="Precios">
+                            <group>
+                                <group>
+                                    <field name="precio_por_noche" />
+                                </group>
+                                <group>
+                                <field name="precio_por_persona" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View habitacion search -->
+    <record id="view_hotel_habitacion_search" model="ir.ui.view">
+        <field name="name">hotel.habitacion.search</field>
+        <field name="model">hotel.habitacion</field>
+        <field name="arch" type="xml">
+            <search string="Habitación">
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action habitacion -->
+    <record id="action_habitacion" model="ir.actions.act_window">
+        <field name="name">Habitación</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hotel.habitacion</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Agregue una nueva habitación
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="hotel_habitacion_menu"
+        name="Habitación"
+        action="action_habitacion"
+        parent="hotel_menu"
+        sequence="10" />
+
+</odoo>
