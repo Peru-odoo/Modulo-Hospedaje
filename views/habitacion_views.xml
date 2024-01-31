@@ -56,8 +56,15 @@
         <field name="model">hotel.habitacion</field>
         <field name="arch" type="xml">
             <search string="Habitación">
-                <group expand="1" string="Group By">
-                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}" />
+                <field name="numero" />
+                <filter name="filter_simple" string="Simple" domain="[('tipo', '=', 'simple')]" />
+                <filter name="filter_doble" string="Doble" domain="[('tipo', '=', 'doble')]" />
+                <filter name="filter_suite" string="Suite" domain="[('tipo', '=', 'suite')]" />
+                <filter name="filter_jrsuite" string="Junior Suite"
+                    domain="[('tipo', '=', 'jrsuite')]" />
+                <group expand="0" string="Agrupar por...">
+                    <filter name="group_by_tipo" string="Tipo de habitación"
+                        context="{'group_by': 'tipo'}" />
                 </group>
             </search>
         </field>
@@ -71,6 +78,7 @@
         <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
+        <field name="search_view_id" ref="hotel.view_hotel_habitacion_search" />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Agregue una nueva habitación
