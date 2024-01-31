@@ -29,6 +29,7 @@ class Habitacion(models.Model):
     currency_id = fields.Many2one('res.currency', 'Moneda', required=True, default=lambda self: self.env['res.currency'].search([('name', '=', 'CUP')]).id)
     precio_por_noche = fields.Monetary(string=_('Precio por noche'), required=True)
 
+    _sql_constraints = [('numero_unico', 'unique (numero)', 'Ya existe una habitación con este número')]
     
     @api.depends('numero')
     def _compute_name(self):
