@@ -7,7 +7,7 @@
     'author': 'Yankiel Yong',
     'website': '',
     'category': '',
-    'depends': ['base', ],
+    'depends': ['base', 'mail'],
     "data": [
         "security/ir.model.access.csv",
         "views/hotel.xml",
