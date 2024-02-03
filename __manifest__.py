@@ -7,11 +7,12 @@
     'author': 'Yankiel Yong',
     'website': '',
     'category': '',
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'hr', 'sale_management'],
     "data": [
         "security/ir.model.access.csv",
         "views/hotel.xml",
         "views/habitacion_views.xml",
+        "views/reservacion_views.xml",
     ],
     'application': True,
     'installable': True,

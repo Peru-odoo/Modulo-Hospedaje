@@ -6,4 +6,10 @@
         name="Hotel"
         sequence="10"/>
 
+    <menuitem
+        id="hotel_registro_menu"
+        name="Registro"
+        parent="hotel_menu"
+        sequence="10"/>
+
 </odoo>

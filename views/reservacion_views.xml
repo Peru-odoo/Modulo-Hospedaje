@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View reserva View Tree -->
+    <record id="view_hotel_reservacion_tree" model="ir.ui.view">
+        <field name="name">hotel.reservacion.tree</field>
+        <field name="model">hotel.reservacion</field>
+        <field name="arch" type="xml">
+            <tree string="Reservaciones">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View reserva form -->
+    <record id="view_hotel_reservacion_form" model="ir.ui.view">
+        <field name="name">hotel.reservacion.form</field>
+        <field name="model">hotel.reservacion</field>
+        <field name="arch" type="xml">
+            <form string="Reservaciones">
+                <header></header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View reserva search -->
+    <record id="view_hotel_reservacion_search" model="ir.ui.view">
+        <field name="name">hotel.reservacion.search</field>
+        <field name="model">hotel.reservacion</field>
+        <field name="arch" type="xml">
+            <search string="Reservaciones">
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action reserva -->
+    <record id="action_reservacion" model="ir.actions.act_window">
+        <field name="name">Reservaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hotel.reservacion</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="hotel.view_hotel_reservacion_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Agregue una nueva reservación
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="hotel_reservacion_menu"
+        name="Reservaciones"
+        action="action_reservacion"
+        parent="hotel_registro_menu"
+        sequence="10" />
+
+</odoo>
