@@ -14,6 +14,7 @@
         "views/hotel.xml",
         "views/habitacion_views.xml",
         "views/reservacion_views.xml",
+        "views/entrada_views.xml",
     ],
     'application': True,
     'installable': True,

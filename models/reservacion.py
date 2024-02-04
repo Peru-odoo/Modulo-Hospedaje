@@ -12,7 +12,7 @@ class Reservacion(models.Model):
     _name = 'hotel.reservacion'
     _inherit = ['mail.thread']
     _description = _('Reservación')
-    _order = 'name'
+    _order = 'fecha_entrada'
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Nueva Reservación'), readonly=True)
     cliente_id = fields.Many2one('res.partner', string=_('Cliente'), required=True)
@@ -28,6 +28,13 @@ class Reservacion(models.Model):
         compute='_compute_fecha_salida'
     )
     
+    def registrar_entrada(self):
+        return{
+            'res_model': 'hotel.entrada',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'view_id': self.env.ref('hotel.view_hotel_entrada_form').id
+        }
     
     @api.model_create_multi
     def create(self, vals_list):
