@@ -27,7 +27,7 @@ class Habitacion(models.Model):
             ('simple', 'Simple'),
             ('doble', 'Doble'),
             ('suite', 'Suite'),
-            ('jrsuite', 'Junior Suite'),
+            ('junior suite', 'Junior Suite'),
         ]
     )
     capacidad = fields.Integer(string=_('Capacidad'), compute='_compute_capacidad', default="0")
@@ -44,6 +44,26 @@ class Habitacion(models.Model):
     )
 
     _sql_constraints = [('numero_unico', 'unique (numero)', 'Ya existe una habitación con este número')]
+     
+    def name_get(self):
+        res = []
+        for rec in self:
+            tipo = ''
+            if rec.tipo == 'simple': tipo = 'Simple'
+            elif rec.tipo == 'doble': tipo = 'Doble'
+            elif rec.tipo == 'suite': tipo = 'Suite'
+            else: tipo = 'Junior Suite'
+            name = f'{rec.name} - {tipo} - {rec.precio_por_noche}{rec.currency_id.symbol}'
+            res.append((rec.id, name))
+        return res
+    
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = args or []
+        domain = []
+        if name:
+            domain = ['|', ('numero', operator, name), ('tipo', operator, name)]
+        return self._search(domain + args, limit=limit, access_rights_uid=name_get_uid)
             
     @api.depends('numero')
     def _compute_name(self):
@@ -57,7 +77,7 @@ class Habitacion(models.Model):
                 rec.capacidad = 1
             elif rec.tipo == 'doble':
                 rec.capacidad = 2
-            elif rec.tipo == 'jrsuite':
+            elif rec.tipo == 'junior suite':
                 rec.capacidad = 3
             elif rec.tipo == 'suite':
                 rec.capacidad = 4
@@ -75,5 +95,7 @@ class Habitacion(models.Model):
         for rec in self:
             if rec.numero < 1:
                 raise ValidationError('El número de la habitación debe ser mayor que 0')
-        
+           
+     
+    
     
