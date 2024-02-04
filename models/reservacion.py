@@ -14,9 +14,9 @@ class Reservacion(models.Model):
     _description = _('Reservación')
     _order = 'name'
 
-    name = fields.Char(string=_('Name'), default=lambda self: _('Nueva Reservación'), readonly=True)
-    cliente_id = fields.Many2one('res.partner', string='Cliente', required=True)
-    habitacion_id = fields.Many2one('hotel.habitacion', string='Habitación', required=True)
+    name = fields.Char(string=_('Nº'), default=lambda self: _('Nueva Reservación'), readonly=True)
+    cliente_id = fields.Many2one('res.partner', string=_('Cliente'), required=True)
+    habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), required=True)
     fecha_entrada = fields.Date(
         string=_('Fecha de entrada'),
         default=fields.Date.context_today,
