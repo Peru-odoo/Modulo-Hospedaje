@@ -12,4 +12,7 @@ class Entrada(models.Model):
     _inherit = ['mail.thread']
     _description = _('Entrada')
 
-    name = fields.Char(_('Name'))
+    name = fields.Char(string=_('Nº'), default=lambda self: _('Registrar Entrada'), readonly=True)
+    reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'))
+    habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'))
+    huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'))
