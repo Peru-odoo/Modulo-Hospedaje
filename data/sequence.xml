@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hotel_reservacion_sequence" model="ir.sequence">
+            <field name="name">Reservación Sequence</field>
+            <field name="code">hotel.reservacion</field>
+            <field name="prefix">RSV</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

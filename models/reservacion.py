@@ -14,7 +14,7 @@ class Reservacion(models.Model):
     _description = _('Reservación')
     _order = 'name'
 
-    name = fields.Char(_('Name'), default="Nueva Reservación")
+    name = fields.Char(string=_('Name'), default=lambda self: _('Nueva Reservación'), readonly=True)
     cliente_id = fields.Many2one('res.partner', string='Cliente', required=True)
     habitacion_id = fields.Many2one('hotel.habitacion', string='Habitación', required=True)
     fecha_entrada = fields.Date(
@@ -28,6 +28,13 @@ class Reservacion(models.Model):
         compute='_compute_fecha_salida'
     )
     
+    
+    @api.model_create_multi
+    def create(self, vals_list):
+        for val in vals_list:
+            if val.get('name', _('Nueva Reservación')) == _('Nueva Reservación'):
+                val['name'] = self.env['ir.sequence'].next_by_code('hotel.reservacion') or _('Nueva Reservación')
+        return super(Reservacion, self).create(vals_list)
     
     @api.depends('fecha_entrada', 'cantidad_dias')
     def _compute_fecha_salida(self):
