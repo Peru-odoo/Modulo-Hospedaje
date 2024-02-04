@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import logging
 
 from odoo import models, fields, api, _
@@ -13,4 +14,31 @@ class Reservacion(models.Model):
     _description = _('Reservación')
     _order = 'name'
 
-    name = fields.Char(_('Name'))
+    name = fields.Char(_('Name'), default="Nueva Reservación")
+    cliente_id = fields.Many2one('res.partner', string='Cliente', required=True)
+    habitacion_id = fields.Many2one('hotel.habitacion', string='Habitación', required=True)
+    fecha_entrada = fields.Date(
+        string=_('Fecha de entrada'),
+        default=fields.Date.context_today,
+        required=True,
+    )
+    cantidad_dias = fields.Integer(string=_('Cantidad de días'), required=True)
+    fecha_salida = fields.Date(
+        string=_('Fecha de salida'),
+        compute='_compute_fecha_salida'
+    )
+    
+    
+    @api.depends('fecha_entrada', 'cantidad_dias')
+    def _compute_fecha_salida(self):
+        for rec in self:
+            if rec.fecha_entrada and rec.cantidad_dias and rec.cantidad_dias > 0:
+                rec.fecha_salida = rec.fecha_entrada + datetime.timedelta(days=rec.cantidad_dias)
+            else:
+                rec.fecha_salida = ''
+                
+    @api.constrains('cantidad_dias')
+    def _constrains_cantidad_dias(self):
+        for rec in self:
+            if rec.cantidad_dias < 1:
+                raise ValidationError('La cantidad de días debe ser mayor que 0')
