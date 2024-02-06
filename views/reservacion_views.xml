@@ -88,11 +88,4 @@
         </field>
     </record>
 
-    <menuitem
-        id="hotel_reservacion_menu"
-        name="Reservaciones"
-        action="action_reservacion"
-        parent="hotel_registro_menu"
-        sequence="10" />
-
 </odoo>

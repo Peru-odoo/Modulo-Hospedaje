@@ -76,11 +76,4 @@
         </field>
     </record>
 
-    <menuitem
-        id="hotel_entrada_menu"
-        name="Entradas"
-        action="action_entrada"
-        parent="hotel_registro_menu"
-        sequence="10" />
-
 </odoo>
