@@ -26,6 +26,7 @@
                 <header>
                     <button name="registrar_entrada" class="oe_highlight" string="Registrar Entrada"
                         type="object"
+                        context="{'default_reserva_id': id, 'default_habitacion_id': habitacion_id, 'default_huespedes_ids': (1, cliente_id)}"
                         attrs="{'invisible': [('name', '=', 'Nueva Reservación')]}" />
                 </header>
                 <sheet>

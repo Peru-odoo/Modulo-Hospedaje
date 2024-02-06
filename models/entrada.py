@@ -13,6 +13,6 @@ class Entrada(models.Model):
     _description = _('Entrada')
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Registrar Entrada'), readonly=True)
-    reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'))
-    habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'))
+    reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
+    habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), readonly=True)
     huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'))
