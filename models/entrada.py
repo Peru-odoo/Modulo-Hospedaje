@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 class Entrada(models.Model):
     _name = 'hotel.entrada'
     _inherit = ['mail.thread']
-    _description = _('Entrada')
+    _description = _('Entrada al hotel')
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Registrar Entrada'), readonly=True)
     reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
