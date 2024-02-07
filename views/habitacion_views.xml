@@ -146,11 +146,4 @@
         </field>
     </record>
 
-    <menuitem
-        id="hotel_habitacion_menu"
-        name="Habitaciones"
-        action="action_habitacion"
-        parent="hotel_menu"
-        sequence="10" />
-
 </odoo>

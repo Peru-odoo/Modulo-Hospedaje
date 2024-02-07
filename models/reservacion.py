@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import datetime
 import logging
+import zoneinfo
 
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError, ValidationError, AccessDenied
 
 _logger = logging.getLogger(__name__)
 
@@ -12,11 +13,10 @@ class Reservacion(models.Model):
     _name = 'hotel.reservacion'
     _inherit = ['mail.thread']
     _description = _('Reservación')
-    _order = 'name'
+    _order = 'fecha_entrada'
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Nueva Reservación'), readonly=True)
     cliente_id = fields.Many2one('res.partner', string=_('Cliente'), required=True)
-    habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), required=True)
     fecha_entrada = fields.Date(
         string=_('Fecha de entrada'),
         default=fields.Date.context_today,
@@ -25,9 +25,29 @@ class Reservacion(models.Model):
     cantidad_dias = fields.Integer(string=_('Cantidad de días'), required=True)
     fecha_salida = fields.Date(
         string=_('Fecha de salida'),
-        compute='_compute_fecha_salida'
+        compute='_compute_fecha_salida',
+        store=True
     )
     
+    def _get_habitacion_domain(self):
+        domain = [('id', 'in', 
+                   self.env['hotel.habitacion'].search([('estado', '=', 'disponible')]).ids)]
+        return domain
+    
+    habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), required=True, domain=_get_habitacion_domain)
+    
+    def registrar_entrada(self):
+        for rec in self:
+            fecha = datetime.datetime.now() + datetime.timedelta(hours=-5)
+            fecha_hoy = datetime.date(fecha.year, fecha.month, fecha.day)
+            if rec.fecha_entrada != fecha_hoy:
+                raise AccessDenied('No estamos en la fecha de entrada reservada')
+        return{
+            'res_model': 'hotel.entrada',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'view_id': self.env.ref('hotel.view_hotel_entrada_form').id
+        }
     
     @api.model_create_multi
     def create(self, vals_list):
