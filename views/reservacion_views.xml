@@ -27,7 +27,7 @@
                     <button name="registrar_entrada" class="oe_highlight" string="Registrar Entrada"
                         type="object"
                         context="{'default_reserva_id': id, 'default_habitacion_id': habitacion_id, 'default_huespedes_ids': (1, cliente_id)}"
-                        attrs="{'invisible': [('name', '=', 'Nueva Reservación')]}" />
+                        attrs="{'invisible': ['|', ('name', '=', 'Nueva Reservación'), ('active', '=', False)]}" />
                 </header>
                 <sheet>
                     <widget name="web_ribbon" title="Archivada" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}" />
@@ -67,6 +67,8 @@
         <field name="model">hotel.reservacion</field>
         <field name="arch" type="xml">
             <search string="Reservaciones">
+                <field name="name" />
+                <field name="cliente_id" />
                 <field name="habitacion_id" />
                 <filter name="archived" string="Archivada" domain="[('active', '=', False)]" />
             </search>

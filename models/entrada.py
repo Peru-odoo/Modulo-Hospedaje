@@ -16,6 +16,7 @@ class Entrada(models.Model):
     reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
     habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), readonly=True)
     huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'), required=True)
+    tiene_estancia = fields.Boolean(default=False)
     
     def registrar_estancia(self):
         return{

@@ -15,6 +15,7 @@ class Estancia(models.Model):
     name = fields.Char(string=_('Nº'), default=lambda self: _('Registrar Estancia'), readonly=True)
     reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
     habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), readonly=True)
+    entrada_id = fields.Many2one('hotel.entrada')
     huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'), readonly=True, store=True)
     fecha_entrada = fields.Date(string=_('Fecha de entrada'), readonly=True, compute="_compute_fechas", store=True)
     fecha_salida = fields.Date(string=_('Fecha de salida'), readonly=True, compute="_compute_fechas", store=True)
@@ -24,7 +25,10 @@ class Estancia(models.Model):
         for val in vals_list:
             if val.get('name', _('Registrar Estancia')) == _('Registrar Estancia'):
                 val['name'] = self.env['ir.sequence'].next_by_code('hotel.estancia') or _('Registrar Estancia')
-        return super(Estancia, self).create(vals_list)
+        result = super(Estancia, self).create(vals_list)
+        for rec in result:
+            rec.entrada_id.tiene_estancia = True
+        return result
     
     @api.depends('reserva_id')
     def _compute_fechas(self):

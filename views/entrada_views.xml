@@ -24,13 +24,14 @@
                 <header>
                     <button name="registrar_estancia" class="oe_highlight" string="Registrar Estancia"
                         type="object"
-                        context="{'default_reserva_id': reserva_id, 'default_habitacion_id': habitacion_id, 'default_huespedes_ids': huespedes_ids}"
-                        attrs="{'invisible': [('name', '=', 'Registrar Entrada')]}" />
+                        context="{'default_entrada_id': id, 'default_reserva_id': reserva_id, 'default_habitacion_id': habitacion_id, 'default_huespedes_ids': huespedes_ids}"
+                        attrs="{'invisible': ['|', ('name', '=', 'Registrar Entrada'), ('tiene_estancia', '=', True)]}" />
                 </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
                             <field name="name" />
+                            <field name="tiene_estancia" invisible="1" />
                         </h1>
                     </div>
                     <group>
@@ -66,9 +67,9 @@
         <field name="model">hotel.entrada</field>
         <field name="arch" type="xml">
             <search string="Entradas">
-                <group expand="1" string="Group By">
-                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}" />
-                </group>
+                <field name="name" />
+                <field name="reserva_id" />
+                <field name="habitacion_id" />
             </search>
         </field>
     </record>
