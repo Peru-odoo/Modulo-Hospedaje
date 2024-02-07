@@ -15,7 +15,7 @@ class Entrada(models.Model):
     name = fields.Char(string=_('Nº'), default=lambda self: _('Registrar Entrada'), readonly=True)
     reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
     habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), readonly=True)
-    huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'))
+    huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'), required=True)
     
     def registrar_estancia(self):
         return{
@@ -31,3 +31,12 @@ class Entrada(models.Model):
             if val.get('name', _('Registrar Entrada')) == _('Registrar Entrada'):
                 val['name'] = self.env['ir.sequence'].next_by_code('hotel.entrada') or _('Registrar Entrada')
         return super(Entrada, self).create(vals_list)
+    
+    @api.constrains('huespedes_ids')
+    def _constrains_huespedes_ids(self):
+        for rec in self:
+            if len(rec.huespedes_ids) > rec.habitacion_id.capacidad:
+                raise ValidationError(f'La capacidad de esta habitación es de {rec.habitacion_id.capacidad} huéspedes')
+            elif len(rec.huespedes_ids) < 1:
+                raise ValidationError('Debe haber al menos 1 huésped')
+    
