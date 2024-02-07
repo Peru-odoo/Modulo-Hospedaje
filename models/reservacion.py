@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import logging
+import zoneinfo
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError, AccessDenied
@@ -37,8 +38,10 @@ class Reservacion(models.Model):
     
     def registrar_entrada(self):
         for rec in self:
-            if rec.fecha_entrada != fields.Date.context_today:
-                raise AccessDenied('Aún no es la fecha de entrada reservada')
+            fecha = datetime.datetime.now() + datetime.timedelta(hours=-5)
+            fecha_hoy = datetime.date(fecha.year, fecha.month, fecha.day)
+            if rec.fecha_entrada != fecha_hoy:
+                raise AccessDenied('No estamos en la fecha de entrada reservada')
         return{
             'res_model': 'hotel.entrada',
             'type': 'ir.actions.act_window',
