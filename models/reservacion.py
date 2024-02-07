@@ -16,6 +16,7 @@ class Reservacion(models.Model):
     _order = 'fecha_entrada'
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Nueva Reservación'), readonly=True)
+    active = fields.Boolean(default=True, tracking=True)
     cliente_id = fields.Many2one('res.partner', string=_('Cliente'), required=True)
     fecha_entrada = fields.Date(
         string=_('Fecha de entrada'),

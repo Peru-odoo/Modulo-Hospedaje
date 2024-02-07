@@ -33,6 +33,7 @@ class Entrada(models.Model):
         result = super(Entrada, self).create(vals_list)
         for rec in result:
             rec.habitacion_id.estado = 'ocupada'
+            rec.reserva_id.active = False
         return result
     
     @api.constrains('huespedes_ids')
