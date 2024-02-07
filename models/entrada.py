@@ -30,7 +30,10 @@ class Entrada(models.Model):
         for val in vals_list:
             if val.get('name', _('Registrar Entrada')) == _('Registrar Entrada'):
                 val['name'] = self.env['ir.sequence'].next_by_code('hotel.entrada') or _('Registrar Entrada')
-        return super(Entrada, self).create(vals_list)
+        result = super(Entrada, self).create(vals_list)
+        for rec in result:
+            rec.habitacion_id.estado = 'ocupada'
+        return result
     
     @api.constrains('huespedes_ids')
     def _constrains_huespedes_ids(self):
