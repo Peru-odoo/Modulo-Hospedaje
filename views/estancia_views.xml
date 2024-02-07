@@ -6,7 +6,7 @@
         <field name="name">hotel.estancia.tree</field>
         <field name="model">hotel.estancia</field>
         <field name="arch" type="xml">
-            <tree string="Estancias">
+            <tree string="Estancias" create="0" edit="0">
                 <field name="name"/>
                 <field name="reserva_id" />
                 <field name="habitacion_id" />
@@ -58,9 +58,9 @@
         <field name="model">hotel.estancia</field>
         <field name="arch" type="xml">
             <search string="Estancia">
-                <group expand="1" string="Group By">
-                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
-                </group>
+                <field name="name" />
+                <field name="reserva_id" />
+                <field name="habitacion_id" />
             </search>
         </field>
     </record>
