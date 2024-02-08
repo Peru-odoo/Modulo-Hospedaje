@@ -19,6 +19,15 @@ class Estancia(models.Model):
     huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'), readonly=True, store=True)
     fecha_entrada = fields.Date(string=_('Fecha de entrada'), readonly=True, compute="_compute_fechas", store=True)
     fecha_salida = fields.Date(string=_('Fecha de salida'), readonly=True, compute="_compute_fechas", store=True)
+    pedidos_ids = fields.Many2many('hotel.pedido', string=_('Pedidos'))
+
+    def agregar_pedido(self):
+        return{
+            'res_model': 'hotel.pedido',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'view_id': self.env.ref('hotel.view_hotel_pedido_form').id
+        }
 
     @api.model_create_multi
     def create(self, vals_list):

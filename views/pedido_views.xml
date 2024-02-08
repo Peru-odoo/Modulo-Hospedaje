@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View pedido View Tree -->
+    <record id="view_hotel_pedido_tree" model="ir.ui.view">
+        <field name="name">hotel.pedido.tree</field>
+        <field name="model">hotel.pedido</field>
+        <field name="arch" type="xml">
+            <tree string="Pedidos">
+                <field name="name"/>
+                <field name="create_date" string="Fecha y hora" />
+                <field name="descripcion" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View pedido form -->
+    <record id="view_hotel_pedido_form" model="ir.ui.view">
+        <field name="name">hotel.pedido.form</field>
+        <field name="model">hotel.pedido</field>
+        <field name="arch" type="xml">
+            <form string="Pedidos">
+                <header></header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="estancia_id" />
+                        </group>
+                        <group>
+                            <label for="create_date" string="Fecha y hora"
+                                attrs="{'invisible': [('name', '=', 'Nuevo Pedido')]}" />
+                            <field name="create_date" nolabel="1"
+                                attrs="{'invisible': [('name', '=', 'Nuevo Pedido')]}" />
+                        </group>
+                        <label for="descripcion"/>
+                        <field name="descripcion" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View pedido search -->
+    <record id="view_hotel_pedido_search" model="ir.ui.view">
+        <field name="name">hotel.pedido.search</field>
+        <field name="model">hotel.pedido</field>
+        <field name="arch" type="xml">
+            <search string="Pedidos">
+                
+            </search>
+        </field>
+    </record>
+
+    <!-- Action pedido -->
+    <record id="action_pedido" model="ir.actions.act_window">
+        <field name="name">Pedidos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hotel.pedido</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No se encontró ningún pedido
+            </p>
+        </field>
+    </record>
+
+</odoo>
