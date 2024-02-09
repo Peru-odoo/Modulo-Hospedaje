@@ -6,7 +6,7 @@
         <field name="name">hotel.pedido.tree</field>
         <field name="model">hotel.pedido</field>
         <field name="arch" type="xml">
-            <tree string="Pedidos">
+            <tree string="Pedidos" create="0" edit="0">
                 <field name="name"/>
                 <field name="create_date" string="Fecha y hora" />
                 <field name="descripcion" />

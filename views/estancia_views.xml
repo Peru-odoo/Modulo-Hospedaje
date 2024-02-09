@@ -44,7 +44,7 @@
                             <field name="huespedes_ids" />
                         </page>
                         <page name="pagina_pedidos" string="Pedidos a la habitación">
-                            <field name="pedidos_ids" domain="[('estancia_id', '=', id)]" readonly="0" />
+                            <field name="pedidos_ids" domain="[('estancia_id', '=', id)]" readonly="1" />
                             <button name="agregar_pedido" class="oe_highlight" string="Agregar Pedido" type="object"
                                 context="{'default_estancia_id': id}"
                                 attrs="{'invisible': [('name', '=', 'Registrar Estancia')]}" />
