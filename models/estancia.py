@@ -20,6 +20,7 @@ class Estancia(models.Model):
     fecha_entrada = fields.Date(string=_('Fecha de entrada'), readonly=True, compute="_compute_fechas", store=True)
     fecha_salida = fields.Date(string=_('Fecha de salida'), readonly=True, compute="_compute_fechas", store=True)
     pedidos_ids = fields.Many2many('hotel.pedido', string=_('Pedidos'))
+    tiene_salida = fields.Boolean(default=False)
 
     def agregar_pedido(self):
         return{
@@ -27,6 +28,14 @@ class Estancia(models.Model):
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             'view_id': self.env.ref('hotel.view_hotel_pedido_form').id
+        }
+        
+    def registrar_salida(self):
+        return{
+            'res_model': 'hotel.salida',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'view_id': self.env.ref('hotel.view_hotel_salida_form').id
         }
 
     @api.model_create_multi
