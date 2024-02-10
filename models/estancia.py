@@ -14,6 +14,7 @@ class Estancia(models.Model):
     _description = _('Estancia en el hotel')
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Registrar Estancia'), readonly=True)
+    active = fields.Boolean(default=True, tracking=True)
     reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
     habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), readonly=True)
     entrada_id = fields.Many2one('hotel.entrada')
