@@ -15,6 +15,7 @@
         "views/reservacion_views.xml",
         "views/estancia_views.xml",
         "views/entrada_views.xml",
+        "views/pedido_views.xml",
         "views/hotel.xml",
     ],
     'application': True,

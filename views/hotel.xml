@@ -34,6 +34,13 @@
         sequence="6" />
 
     <menuitem
+        id="hotel_pedido_menu"
+        name="Pedidos"
+        action="action_pedido"
+        parent="hotel_registro_menu"
+        sequence="7" />
+
+    <menuitem
         id="hotel_entrada_menu"
         name="Entradas"
         action="action_entrada"
