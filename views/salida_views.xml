@@ -6,8 +6,11 @@
         <field name="name">hotel.salida.tree</field>
         <field name="model">hotel.salida</field>
         <field name="arch" type="xml">
-            <tree string="Salidas">
+            <tree string="Salidas" create="0" edit="0">
                 <field name="name"/>
+                <field name="estancia_id" />
+                <field name="habitacion_id" />
+                <field name="create_date" string="Fecha de salida" />
             </tree>
         </field>
     </record>
@@ -21,17 +24,27 @@
                 <header></header>
                 <sheet>
                     <div class="oe_title">
-                        <label for="name"/>
                         <h1>
                             <field name="name" />
                         </h1>
                     </div>
                     <group>
                         <group>
+                            <field name="estancia_id" />
+                            <field name="habitacion_id" />
                         </group>
                         <group>
+                            <label for="create_date" string="Fecha de salida"
+                                attrs="{'invisible': [('name', '=', 'Registrar Salida')]}" />
+                            <field name="create_date" nolabel="1"
+                                attrs="{'invisible': [('name', '=', 'Registrar Salida')]}" />
                         </group>
                     </group>
+                    <notebook>
+                        <page name="pagina_huespedes" string="Huéspedes">
+                            <field name="huespedes_ids" />
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -43,7 +56,9 @@
         <field name="model">hotel.salida</field>
         <field name="arch" type="xml">
             <search string="Salidas">
-                
+                <field name="name"/>
+                <field name="estancia_id" />
+                <field name="habitacion_id" />
             </search>
         </field>
     </record>

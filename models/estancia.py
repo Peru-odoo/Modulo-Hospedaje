@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
+import datetime
 
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError, ValidationError, AccessDenied
 
 _logger = logging.getLogger(__name__)
 
@@ -31,6 +32,11 @@ class Estancia(models.Model):
         }
         
     def registrar_salida(self):
+        for rec in self:
+            fecha = datetime.datetime.now() + datetime.timedelta(hours=-5)
+            fecha_hoy = datetime.date(fecha.year, fecha.month, fecha.day)
+            if rec.fecha_salida != fecha_hoy:
+                raise AccessDenied('No estamos en la fecha de salida planificada')
         return{
             'res_model': 'hotel.salida',
             'type': 'ir.actions.act_window',
