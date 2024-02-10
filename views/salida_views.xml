@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View salida View Tree -->
+    <record id="view_hotel_salida_tree" model="ir.ui.view">
+        <field name="name">hotel.salida.tree</field>
+        <field name="model">hotel.salida</field>
+        <field name="arch" type="xml">
+            <tree string="Salidas" create="0" edit="0">
+                <field name="name"/>
+                <field name="estancia_id" />
+                <field name="habitacion_id" />
+                <field name="create_date" string="Fecha de salida" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View salida form -->
+    <record id="view_hotel_salida_form" model="ir.ui.view">
+        <field name="name">hotel.salida.form</field>
+        <field name="model">hotel.salida</field>
+        <field name="arch" type="xml">
+            <form string="Salidas">
+                <header></header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="estancia_id" />
+                            <field name="habitacion_id" />
+                        </group>
+                        <group>
+                            <label for="create_date" string="Fecha de salida"
+                                attrs="{'invisible': [('name', '=', 'Registrar Salida')]}" />
+                            <field name="create_date" nolabel="1"
+                                attrs="{'invisible': [('name', '=', 'Registrar Salida')]}" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="pagina_huespedes" string="Huéspedes">
+                            <field name="huespedes_ids" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View salida search -->
+    <record id="view_hotel_salida_search" model="ir.ui.view">
+        <field name="name">hotel.salida.search</field>
+        <field name="model">hotel.salida</field>
+        <field name="arch" type="xml">
+            <search string="Salidas">
+                <field name="name"/>
+                <field name="estancia_id" />
+                <field name="habitacion_id" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Action salida -->
+    <record id="action_salida" model="ir.actions.act_window">
+        <field name="name">Salidas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hotel.salida</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="hotel.view_hotel_salida_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No se encontró ninguna salida
+            </p>
+        </field>
+    </record>
+
+</odoo>

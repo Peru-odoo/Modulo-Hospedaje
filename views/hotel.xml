@@ -45,6 +45,13 @@
         name="Entradas"
         action="action_entrada"
         parent="hotel_registro_menu"
+        sequence="9" />
+
+    <menuitem
+        id="hotel_salida_menu"
+        name="Salidas"
+        action="action_salida"
+        parent="hotel_registro_menu"
         sequence="10" />
 
 </odoo>

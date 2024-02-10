@@ -40,7 +40,7 @@ class Habitacion(models.Model):
             ('disponible', 'Disponible'),
             ('ocupada', 'Ocupada'),
         ],
-        default="disponible", tracking=True
+        default="disponible", tracking=True, readonly=True
     )
 
     _sql_constraints = [('numero_unico', 'unique (numero)', 'Ya existe una habitación con este número')]

@@ -25,8 +25,7 @@
         <field name="arch" type="xml">
             <form string="Habitaciones">
                 <header>
-                    <field name="estado" widget="statusbar" statusbar_visible="disponible,ocupada"
-                        options="{'clickable': '1'}" />
+                    <field name="estado" widget="statusbar" statusbar_visible="disponible,ocupada" />
                 </header>
                 <sheet>
                     <field name="image" widget="image" class="oe_avatar" />

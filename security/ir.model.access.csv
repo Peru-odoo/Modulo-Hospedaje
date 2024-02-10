@@ -4,3 +4,4 @@ hotel.access_hotel_reservacion,access_hotel_reservacion,hotel.model_hotel_reserv
 hotel.access_hotel_entrada,access_hotel_entrada,hotel.model_hotel_entrada,base.group_user,1,1,1,1
 hotel.access_hotel_estancia,access_hotel_estancia,hotel.model_hotel_estancia,base.group_user,1,1,1,1
 hotel.access_hotel_pedido,access_hotel_pedido,hotel.model_hotel_pedido,base.group_user,1,1,1,1
+hotel.access_hotel_salida,access_hotel_salida,hotel.model_hotel_salida,base.group_user,1,1,1,1

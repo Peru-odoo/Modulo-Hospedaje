@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
+import datetime
 
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError, ValidationError, AccessDenied
 
 _logger = logging.getLogger(__name__)
 
@@ -13,6 +14,7 @@ class Estancia(models.Model):
     _description = _('Estancia en el hotel')
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Registrar Estancia'), readonly=True)
+    active = fields.Boolean(default=True, tracking=True)
     reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
     habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), readonly=True)
     entrada_id = fields.Many2one('hotel.entrada')
@@ -20,6 +22,7 @@ class Estancia(models.Model):
     fecha_entrada = fields.Date(string=_('Fecha de entrada'), readonly=True, compute="_compute_fechas", store=True)
     fecha_salida = fields.Date(string=_('Fecha de salida'), readonly=True, compute="_compute_fechas", store=True)
     pedidos_ids = fields.Many2many('hotel.pedido', string=_('Pedidos'))
+    tiene_salida = fields.Boolean(default=False)
 
     def agregar_pedido(self):
         return{
@@ -27,6 +30,19 @@ class Estancia(models.Model):
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             'view_id': self.env.ref('hotel.view_hotel_pedido_form').id
+        }
+        
+    def registrar_salida(self):
+        for rec in self:
+            fecha = datetime.datetime.now() + datetime.timedelta(hours=-5)
+            fecha_hoy = datetime.date(fecha.year, fecha.month, fecha.day)
+            if rec.fecha_salida != fecha_hoy:
+                raise AccessDenied('No estamos en la fecha de salida planificada')
+        return{
+            'res_model': 'hotel.salida',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'view_id': self.env.ref('hotel.view_hotel_salida_form').id
         }
 
     @api.model_create_multi

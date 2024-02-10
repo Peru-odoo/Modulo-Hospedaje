@@ -22,11 +22,19 @@
         <field name="model">hotel.estancia</field>
         <field name="arch" type="xml">
             <form string="Estancias">
-                <header></header>
+                <header>
+                    <button name="registrar_salida" class="oe_highlight" string="Registrar Salida"
+                        type="object"
+                        context="{'default_estancia_id': id, 'default_habitacion_id': habitacion_id, 'default_huespedes_ids': huespedes_ids}"
+                        attrs="{'invisible': ['|', ('name', '=', 'Registrar Estancia'), ('tiene_salida', '=', True)]}" />
+                </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Archivada" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}" />
                     <div class="oe_title">
                         <h1>
                             <field name="name" />
+                            <field name="tiene_salida" invisible="1" />
+                            <field name="active" invisible="1" />
                         </h1>
                     </div>
                     <group>
@@ -51,6 +59,10 @@
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
             </form>
         </field>
     </record>
@@ -64,6 +76,7 @@
                 <field name="name" />
                 <field name="reserva_id" />
                 <field name="habitacion_id" />
+                <filter name="archived" string="Archivada" domain="[('active', '=', False)]" />
             </search>
         </field>
     </record>
