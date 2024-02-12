@@ -38,12 +38,11 @@ class Estancia(models.Model):
             fecha_hoy = datetime.date(fecha.year, fecha.month, fecha.day)
             if rec.fecha_salida != fecha_hoy:
                 raise AccessDenied('No estamos en la fecha de salida planificada')
-        return{
-            'res_model': 'hotel.salida',
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'view_id': self.env.ref('hotel.view_hotel_salida_form').id
-        }
+        self.env['hotel.salida'].create({
+            'estancia_id': self.id,
+            'habitacion_id': self.habitacion_id.id,
+            'huespedes_ids': self.huespedes_ids.ids
+        })
 
     @api.model_create_multi
     def create(self, vals_list):

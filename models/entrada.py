@@ -35,6 +35,12 @@ class Entrada(models.Model):
         for rec in result:
             rec.habitacion_id.estado = 'ocupada'
             rec.reserva_id.active = False
+        self.env['hotel.estancia'].create({
+            'entrada_id': result.id,
+            'reserva_id': result.reserva_id.id,
+            'habitacion_id': result.habitacion_id.id,
+            'huespedes_ids': result.huespedes_ids.ids 
+        })
         return result
     
     @api.constrains('huespedes_ids')
