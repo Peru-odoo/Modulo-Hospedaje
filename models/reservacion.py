@@ -16,7 +16,7 @@ class Reservacion(models.Model):
     _order = 'fecha_entrada'
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Nueva Reservación'), readonly=True)
-    active = fields.Boolean(default=True, tracking=True)
+    active = fields.Boolean(default=True)
     cliente_id = fields.Many2one('res.partner', string=_('Cliente'), required=True)
     fecha_entrada = fields.Date(
         string=_('Fecha de entrada'),
@@ -28,6 +28,15 @@ class Reservacion(models.Model):
         string=_('Fecha de salida'),
         compute='_compute_fecha_salida',
         store=True
+    )
+    estado = fields.Selection(
+        string=_('Estado'),
+        selection=[
+            ('pendiente', 'Pendiente'),
+            ('atendida', 'Atendida'),
+            ('cancelada', 'Cancelada')
+        ],
+        default='pendiente', tracking=True, readonly=True
     )
     
     def _get_habitacion_domain(self):
@@ -49,6 +58,11 @@ class Reservacion(models.Model):
             'view_mode': 'form',
             'view_id': self.env.ref('hotel.view_hotel_entrada_form').id
         }
+        
+    def cancelar_reservacion(self):
+        for rec in self:
+            rec.estado = 'cancelada'
+            rec.active = False
     
     @api.model_create_multi
     def create(self, vals_list):
