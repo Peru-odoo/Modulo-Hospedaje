@@ -17,7 +17,9 @@ class Reservacion(models.Model):
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Nueva Reservación'), readonly=True)
     active = fields.Boolean(default=True)
-    cliente_id = fields.Many2one('res.partner', string=_('Cliente'), required=True)
+    
+    
+    
     fecha_entrada = fields.Date(
         string=_('Fecha de entrada'),
         default=fields.Date.context_today,
@@ -38,6 +40,13 @@ class Reservacion(models.Model):
         ],
         default='pendiente', tracking=True, readonly=True
     )
+    
+    def _get_cliente_domain(self):
+        domain = [('id', 'in', 
+                   self.env['res.partner'].search([('cliente_hotel', '=', True)]).ids)]
+        return domain
+    
+    cliente_id = fields.Many2one('res.partner', string=_('Cliente'), required=True, domain=_get_cliente_domain)
     
     def _get_habitacion_domain(self):
         domain = [('id', 'in', 
@@ -69,7 +78,10 @@ class Reservacion(models.Model):
         for val in vals_list:
             if val.get('name', _('Nueva Reservación')) == _('Nueva Reservación'):
                 val['name'] = self.env['ir.sequence'].next_by_code('hotel.reservacion') or _('Nueva Reservación')
-        return super(Reservacion, self).create(vals_list)
+        result = super(Reservacion, self).create(vals_list)
+        for rec in result:
+            rec.cliente_id.cliente_hotel = True
+        return result
     
     @api.depends('fecha_entrada', 'cantidad_dias')
     def _compute_fecha_salida(self):

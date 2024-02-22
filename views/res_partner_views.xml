@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_view_search" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inactive']" position="before">
+               <filter string="Clientes del hotel" name="clientes" domain="[('cliente_hotel','=', True)]"/>
+               <separator/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_cliente" model="ir.actions.act_window">
+        <field name="name">Clientes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_clientes': 1,'res_partner_search_mode': 'clientes', 'default_is_company': False, 'default_cliente_hotel': True}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No se encontró ningún cliente
+          </p>
+        </field>
+    </record>
+
+</odoo>

@@ -18,11 +18,17 @@ class Estancia(models.Model):
     reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
     habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), readonly=True)
     entrada_id = fields.Many2one('hotel.entrada')
-    huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'), readonly=True, store=True)
     fecha_entrada = fields.Date(string=_('Fecha de entrada'), readonly=True, compute="_compute_fechas", store=True)
     fecha_salida = fields.Date(string=_('Fecha de salida'), readonly=True, compute="_compute_fechas", store=True)
     pedidos_ids = fields.Many2many('hotel.pedido', string=_('Pedidos'))
     tiene_salida = fields.Boolean(default=False)
+    
+    def _get_huespedes_domain(self):
+        domain = [('id', 'in', 
+                   self.env['res.partner'].search([('cliente_hotel', '=', True)]).ids)]
+        return domain
+    
+    huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'), readonly=True, store=True, domain=_get_huespedes_domain)
 
     def agregar_pedido(self):
         return{
@@ -52,6 +58,8 @@ class Estancia(models.Model):
         result = super(Estancia, self).create(vals_list)
         for rec in result:
             rec.entrada_id.tiene_estancia = True
+            for record in rec.huespedes_ids:
+                record.cliente_hotel = True
         return result
     
     @api.depends('reserva_id')

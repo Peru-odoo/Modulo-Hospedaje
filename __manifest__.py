@@ -12,6 +12,7 @@
         "security/ir.model.access.csv",
         "data/sequence.xml",
         "views/habitacion_views.xml",
+        "views/res_partner_views.xml",
         "views/reservacion_views.xml",
         "views/estancia_views.xml",
         "views/pedido_views.xml",

@@ -14,10 +14,17 @@
         sequence="10" />
 
     <menuitem
+        id="hotel_cliente_menu"
+        name="Clientes"
+        action="action_cliente"
+        parent="hotel_menu"
+        sequence="20" />
+
+    <menuitem
         id="hotel_registro_menu"
         name="Registro"
         parent="hotel_menu"
-        sequence="10" />
+        sequence="30" />
 
     <menuitem
         id="hotel_reservacion_menu"
