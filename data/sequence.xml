@@ -2,41 +2,41 @@
 <odoo>
     <data>
 
-        <record id="hotel_reservacion_sequence" model="ir.sequence">
+        <record id="hospedaje_reservacion_sequence" model="ir.sequence">
             <field name="name">Reservación Sequence</field>
-            <field name="code">hotel.reservacion</field>
+            <field name="code">hospedaje.reservacion</field>
             <field name="prefix">RSV</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
 
-        <record id="hotel_estancia_sequence" model="ir.sequence">
+        <record id="hospedaje_estancia_sequence" model="ir.sequence">
             <field name="name">Estancia Sequence</field>
-            <field name="code">hotel.estancia</field>
+            <field name="code">hospedaje.estancia</field>
             <field name="prefix">EST</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
 
-        <record id="hotel_entrada_sequence" model="ir.sequence">
+        <record id="hospedaje_entrada_sequence" model="ir.sequence">
             <field name="name">Entrada Sequence</field>
-            <field name="code">hotel.entrada</field>
+            <field name="code">hospedaje.entrada</field>
             <field name="prefix">ENT</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
 
-        <record id="hotel_pedido_sequence" model="ir.sequence">
+        <record id="hospedaje_pedido_sequence" model="ir.sequence">
             <field name="name">Pedido Sequence</field>
-            <field name="code">hotel.pedido</field>
+            <field name="code">hospedaje.pedido</field>
             <field name="prefix">PD</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
 
-        <record id="hotel_salida_sequence" model="ir.sequence">
+        <record id="hospedaje_salida_sequence" model="ir.sequence">
             <field name="name">Salida Sequence</field>
-            <field name="code">hotel.salida</field>
+            <field name="code">hospedaje.salida</field>
             <field name="prefix">SLD</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>

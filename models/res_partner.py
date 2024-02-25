@@ -10,6 +10,6 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = 'res.partner'
     
-    cliente_hotel = fields.Boolean(string=_('cliente_hotel'), default=False)
+    huesped = fields.Boolean(default=False)
     
     

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="hospedaje_menu"
+        name="Hospedaje"
+        sequence="10" />
+
+    <menuitem
+        id="hospedaje_habitacion_menu"
+        name="Habitaciones"
+        action="action_habitacion"
+        parent="hospedaje_menu"
+        sequence="10" />
+
+    <menuitem
+        id="hospedaje_huespedes_menu"
+        name="Huéspedes"
+        action="action_huesped"
+        parent="hospedaje_menu"
+        sequence="20" />
+
+    <menuitem
+        id="hospedaje_registro_menu"
+        name="Registro"
+        parent="hospedaje_menu"
+        sequence="30" />
+
+    <menuitem
+        id="hospedaje_reservacion_menu"
+        name="Reservaciones"
+        action="action_reservacion"
+        parent="hospedaje_registro_menu"
+        sequence="8" />
+
+    <menuitem
+        id="hospedaje_entrada_menu"
+        name="Entradas"
+        action="action_entrada"
+        parent="hospedaje_registro_menu"
+        sequence="9" />
+
+    <menuitem
+        id="hospedaje_salida_menu"
+        name="Salidas"
+        action="action_salida"
+        parent="hospedaje_registro_menu"
+        sequence="10" />
+
+    <menuitem
+        id="hospedaje_configuracion_menu"
+        name="Configuración"
+        parent="hospedaje_menu"
+        sequence="40" />
+
+    <menuitem
+        id="hospedaje_tipo_habitacion_menu"
+        name="Tipo de habitaciones"
+        action="action_tipo_habitacion"
+        parent="hospedaje_configuracion_menu"
+        sequence="10" />
+
+</odoo>
