@@ -25,6 +25,6 @@ class Salida(models.Model):
         result = super(Salida, self).create(vals_list)
         for rec in result:
             rec.reserva_id.active = False
-            rec.reserva_id.estado = 'atendida'
+            rec.reserva_id.estado = 'finalizada'
             rec.habitacion_id.estado = 'disponible'
         return result

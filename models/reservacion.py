@@ -21,7 +21,7 @@ class Reservacion(models.Model):
         default=fields.Date.context_today,
         required=True,
     )
-    cantidad_dias = fields.Integer(string=_('Cantidad de días'), required=True)
+    cantidad_dias = fields.Integer(string=_('Cantidad de días'), required=True, default=1)
     fecha_salida = fields.Date(
         string=_('Fecha de salida'),
         compute='_compute_fecha_salida',
@@ -31,8 +31,8 @@ class Reservacion(models.Model):
         string=_('Estado'),
         selection=[
             ('pendiente', 'Pendiente'),
-            ('activa', 'Activa'),
-            ('atendida', 'Atendida'),
+            ('encurso', 'En Curso'),
+            ('finalizada', 'Finalizada'),
             ('cancelada', 'Cancelada')
         ],
         default='pendiente', tracking=True, readonly=True
@@ -79,9 +79,9 @@ class Reservacion(models.Model):
             if rec.fecha_salida > fecha_hoy:
                 raise AccessDenied('No estamos en la fecha de salida planificada')
         self.env['hospedaje.salida'].create({
-            'estancia_id': self.estancia_id.id,
+            'reserva_id': self.id,
             'habitacion_id': self.habitacion_id.id,
-            'huespedes_ids': self.estancia_id.huespedes_ids.ids
+            'huespedes_ids': self.huespedes_ids.ids
         })
         
     def cancelar_reservacion(self):
