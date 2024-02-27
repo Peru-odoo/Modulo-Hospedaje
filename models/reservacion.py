@@ -49,15 +49,9 @@ class Reservacion(models.Model):
         domain = [('id', 'in', 
                    self.env['res.partner'].search([('huesped', '=', True)]).ids)]
         return domain
-    
     cliente_id = fields.Many2one('res.partner', string=_('Cliente'), required=True, domain=_get_cliente_domain)
     
-    def _get_habitacion_domain(self):
-        domain = [('id', 'in', 
-                   self.env['hospedaje.habitacion'].search([('estado', '=', 'disponible')]).ids)]
-        return domain
-    
-    habitacion_id = fields.Many2one('hospedaje.habitacion', string=_('Habitación'), required=True, domain=_get_habitacion_domain)
+    habitacion_id = fields.Many2one('hospedaje.habitacion', string=_('Habitación'), required=True)
     
     def registrar_entrada(self):
         for rec in self:
@@ -106,6 +100,16 @@ class Reservacion(models.Model):
                 rec.fecha_salida = rec.fecha_entrada + datetime.timedelta(days=rec.cantidad_dias)
             else:
                 rec.fecha_salida = ''
+                
+    @api.onchange('fecha_salida')
+    def _dominio_habitaciones(self):
+        habitaciones = self.env['hospedaje.habitacion'].search([]).ids
+        reservaciones = self.env['hospedaje.reservacion'].search(['|', ('estado', '=', 'pendiente'), ('estado', '=', 'encurso')])
+        for reservacion in reservaciones:
+            if reservacion.fecha_entrada < self.fecha_salida and reservacion.fecha_salida > self.fecha_entrada:
+                habitaciones.remove(reservacion.habitacion_id.id)
+        domain = {'habitacion_id': [('id', 'in', habitaciones)]}
+        return {'domain': domain}
                 
     @api.constrains('cantidad_dias')
     def _constrains_cantidad_dias(self):
