@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hospedaje_tipo_habitacion_tree" model="ir.ui.view">
+        <field name="name">hospedaje.habitacion.tipo.tree</field>
+        <field name="model">hospedaje.habitacion.tipo</field>
+        <field name="arch" type="xml">
+            <tree string="Tipos de habitaciones">
+                <field name="name" />
+                <field name="capacidad" />
+                <field name="descripcion" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hospedaje_tipo_habitacion_form" model="ir.ui.view">
+        <field name="name">hospedaje.habitacion.tipo.form</field>
+        <field name="model">hospedaje.habitacion.tipo</field>
+        <field name="arch" type="xml">
+            <form string="Tipos de habitaciones">
+                <header></header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                        </group>
+                        <group>
+                            <field name="capacidad" />
+                        </group>
+                        <label for="descripcion" string="Descripción" />
+                        <field name="descripcion" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hospedaje_tipo_habitacion_search" model="ir.ui.view">
+        <field name="name">hospedaje.habitacion.tipo.search</field>
+        <field name="model">hospedaje.habitacion.tipo</field>
+        <field name="arch" type="xml">
+            <search string="Tipos de habitaciones">
+                <field name="name" />
+                <field name="capacidad" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tipo_habitacion" model="ir.actions.act_window">
+        <field name="name">Tipos de habitaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospedaje.habitacion.tipo</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="hospedaje.view_hospedaje_tipo_habitacion_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No se encontró ningún tipo de habitación
+            </p>
+        </field>
+    </record>
+
+</odoo>

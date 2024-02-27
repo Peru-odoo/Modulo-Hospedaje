@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_view_search" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inactive']" position="before">
+               <filter string="Huéspedes" name="huespedes" domain="[('huesped','=', True)]"/>
+               <separator/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_huesped" model="ir.actions.act_window">
+        <field name="name">Huéspedes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_huespedes': 1,'res_partner_search_mode': 'huespedes', 'default_is_company': False, 'default_huesped': True}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No se encontró ningún huesped
+          </p>
+        </field>
+    </record>
+
+</odoo>

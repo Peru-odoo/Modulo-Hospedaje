@@ -8,40 +8,24 @@ _logger = logging.getLogger(__name__)
 
 
 class Entrada(models.Model):
-    _name = 'hotel.entrada'
+    _name = 'hospedaje.entrada'
     _inherit = ['mail.thread']
-    _description = _('Entrada al hotel')
+    _description = _('Entrada')
 
     name = fields.Char(string=_('Nº'), default=lambda self: _('Registrar Entrada'), readonly=True)
-    reserva_id = fields.Many2one('hotel.reservacion', string=_('Reservación'), readonly=True)
-    habitacion_id = fields.Many2one('hotel.habitacion', string=_('Habitación'), readonly=True)
+    reserva_id = fields.Many2one('hospedaje.reservacion', string=_('Reservación'), readonly=True)
+    habitacion_id = fields.Many2one('hospedaje.habitacion', string=_('Habitación'), readonly=True)
     huespedes_ids = fields.Many2many('res.partner', string=_('Huespedes'), required=True)
-    tiene_estancia = fields.Boolean(default=False)
-    
-    def registrar_estancia(self):
-        return{
-            'res_model': 'hotel.estancia',
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'view_id': self.env.ref('hotel.view_hotel_estancia_form').id
-        }
     
     @api.model_create_multi
     def create(self, vals_list):
         for val in vals_list:
             if val.get('name', _('Registrar Entrada')) == _('Registrar Entrada'):
-                val['name'] = self.env['ir.sequence'].next_by_code('hotel.entrada') or _('Registrar Entrada')
+                val['name'] = self.env['ir.sequence'].next_by_code('hospedaje.entrada') or _('Registrar Entrada')
         result = super(Entrada, self).create(vals_list)
         for rec in result:
             rec.habitacion_id.estado = 'ocupada'
-            rec.reserva_id.active = False
-            rec.reserva_id.estado = 'atendida'
-        self.env['hotel.estancia'].create({
-            'entrada_id': result.id,
-            'reserva_id': result.reserva_id.id,
-            'habitacion_id': result.habitacion_id.id,
-            'huespedes_ids': result.huespedes_ids.ids 
-        })
+            rec.reserva_id.estado = 'encurso'
         return result
     
     @api.constrains('huespedes_ids')
