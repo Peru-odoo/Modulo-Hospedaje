@@ -33,7 +33,7 @@
                     <button name="registrar_salida" class="oe_highlight" string="Registrar Salida"
                         type="object"
                         context="{'default_reserva_id': id, 'default_habitacion_id': habitacion_id, 'default_huespedes_ids': huespedes_ids}"
-                        attrs="{'invisible': ['|', ('name', '=', 'Nueva Reservación'), ('estado', '!=', 'activa')]}" />
+                        attrs="{'invisible': ['|', ('name', '=', 'Nueva Reservación'), ('estado', '!=', 'encurso')]}" />
                     <button name="cancelar_reservacion" class="oe_highlight" string="Cancelar Reservación"
                         type="object"
                         attrs="{'invisible': ['|', ('name', '=', 'Nueva Reservación'), ('estado', '!=', 'pendiente')]}" />
